@@ -16,9 +16,9 @@ passport.deserializeUser(function (id, fn) {
 });
 
 passport.use(new TwitterStrategy({
-        consumerKey: "nmbk1uqKB0rbWjBxrPv9iksEf",
-        consumerSecret: "QeBlJHanPy232ZbOhyPisfI8hLLUVMujXjuI7Sz0Ym4o6m7eGF",
-        callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
+        consumerKey: config.session.twitter.consumerKey,
+        consumerSecret: config.session.twitter.consumerSecret,
+        callbackURL: config.session.twitter.callbackURL
     },
     function (accessToken, refreshToken, profile, done) {
         User.findOrCreate({

@@ -4,9 +4,9 @@ const Account = require('../models/account');
 const config = require('../config/config');
 
 passport.use(new GoogleStrategy({
-        clientID: "591307876438-4nmmm817vks785u467lo22kss40kqno2.apps.googleusercontent.com",
-        clientSecret: "BagENe4LxG_PZ_qz2oFX7Aok",
-        callbackURL: "http://127.0.0.1:3000/auth/google/callback"
+        clientID: config.session.google.clientID,
+        clientSecret: config.session.google.clientSecret,
+        callbackURL: config.session.google.callbackURL
     },
     function (accessToken, refreshToken, profile, done) {
         User.findOrCreate({
