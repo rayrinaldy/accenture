@@ -1,0 +1,134 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+    font-family: Poppins-Regular, sans-serif;
+}
+
+a {
+    font-family: Poppins-Regular;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #666666;
+    margin: 0px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+
+    &:focus {
+        outline: none !important;
+    }
+
+    &:hover {
+        text-decoration: none;
+        color: #6a7dfe;
+        color: -webkit-linear-gradient(left, #21d4fd, #b721ff);
+        color: -o-linear-gradient(left, #21d4fd, #b721ff);
+        color: -moz-linear-gradient(left, #21d4fd, #b721ff);
+        color: linear-gradient(left, #21d4fd, #b721ff);
+    }
+}
+
+/*---------------------------------------------*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0px;
+}
+
+p {
+    font-family: Poppins-Regular;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #666666;
+    margin: 0px;
+}
+
+ul,
+li {
+    margin: 0px;
+    list-style-type: none;
+}
+
+/*---------------------------------------------*/
+
+input {
+    outline: none;
+    border: none;
+}
+
+textarea {
+    outline: none;
+    border: none;
+
+    &:focus {
+        border-color: transparent !important;
+    }
+}
+
+input:focus {
+    border-color: transparent !important;
+
+    &::-webkit-input-placeholder,
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder {
+        color: transparent;
+    }
+}
+
+textarea:focus {
+
+    &::-webkit-input-placeholder,
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder {
+        color: transparent;
+    }
+}
+
+input {
+
+    &::-webkit-input-placeholder,
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder {
+        color: #adadad;
+    }
+}
+
+textarea {
+
+    &::-webkit-input-placeholder,
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder {
+        color: #adadad;
+    }
+}
+
+/*---------------------------------------------*/
+
+button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+iframe {
+    border: none !important;
+}

@@ -1,0 +1,93 @@
+extends layout
+
+block css
+	link(href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css", rel="stylesheet")
+	//- link(href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css", rel="stylesheet")
+	
+block content
+	nav.navbar.navbar-inverse
+		.container-fluid
+			.navbar-header
+				a.navbar-brand(href='#') ACNAPI</strong>
+			
+			ul.nav.navbar-nav.navbar-right
+				if(!user)
+					li
+						a(href='/register')
+							span.glyphicon.glyphicon-user
+							|  Register
+					li
+						a(href='/login')
+							span.glyphicon.glyphicon-log-in
+							|  Login
+				else
+					p.navbar-text
+						span.glyphicon.glyphicon-user
+						|  You are currently logged in as #{user.username || user.facebook.name}
+					li
+						a(href="/logout")
+							span.glyphicon.glyphicon-log-in
+							|  Logout
+	.container-fluid
+		.row
+			.col-md-10.col-md-offset-1
+				if (error && error.length > 0)
+					.alert.alert-danger!= error
+
+			.col-md-6.col-md-offset-3
+				h3.text-center Where you want to go?
+				form.form-inline.row(action="#")
+					#locationField.form-group.col-sm-9
+						input#autocomplete.form-control(type="text" placeholder="Location")
+					#controls.form-group.col-sm-3
+						select.form-control#country
+							option(value='all') All
+							option(value='au') Australia
+							option(value='br') Brazil
+							option(value='ca') Canada
+							option(value='fr') France
+							option(value='de') Germany
+							option(value='mx') Mexico
+							option(value='nz') New Zealand
+							option(value='it') Italy
+							option(value='za') South Africa
+							option(value='es') Spain
+							option(value='pt') Portugal
+							option(value='us') U.S.A.
+							option(value='uk') United Kingdom
+							option(value='my', selected='') Malaysia
+
+				#map
+
+				#listing
+					table#resultsTable
+						tbody#results
+
+				div(style='display: none')
+					#info-content
+						table
+							tbody
+								tr#iw-url-row.iw_table_row
+									td#iw-icon.iw_table_icon
+									td#iw-url
+								tr#iw-address-row.iw_table_row
+									td.iw_attribute_name Address:
+									td#iw-address
+								tr#iw-phone-row.iw_table_row
+									td.iw_attribute_name Telephone:
+									td#iw-phone
+								tr#iw-rating-row.iw_table_row
+									td.iw_attribute_name Rating:
+									td#iw-rating
+								tr#iw-website-row.iw_table_row
+									td.iw_attribute_name Website:
+									td#iw-website
+		
+		.row
+			.col-md-10.col-md-offset-1
+				#hotel_boxes.row.hotel_boxes
+				
+block script
+	//- script(src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js")
+	script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5iae8YDiUuHHmK2tHkerL4KHS7cUmyog&libraries=places&callback=initMap" async defer)
+	script(src="/js/main.js")

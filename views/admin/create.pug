@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	.container
+		h3
+			a(href='/admin') Employee List
+		h1 Create New Employee
+		form(action='/admin/save', method='post')
+			table
+				tbody
+				tr
+					td Name
+					td
+						input(type='text', name='firstName')
+					td
+						input(type='text', name='lastName')
+				tr
+					td Address
+					td
+						textarea(name='address')
+				tr
+					td Email
+					td
+						input(type='text', name='email')
+				tr
+					td Phone
+					td
+						input(type='text', name='phone')
+				tr
+					td(colspan='2')
+						input(type='submit', value='Save')

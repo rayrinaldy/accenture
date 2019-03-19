@@ -1,0 +1,327 @@
+extends layout
+
+block css
+	link(href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css", rel="stylesheet")
+	link(href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css", rel="stylesheet")
+	link(href="/vendor/trumbowyg/ui/trumbowyg.min.css", rel="stylesheet")
+	
+block script
+	script(src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js")
+	script(src="/vendor/trumbowyg/trumbowyg.min.js")
+
+	script.
+		$(function(){
+			$('.trumbowyg').trumbowyg();
+
+			$('#table--user').DataTable();
+
+			$('.btn-send_email').click(function(e){
+				var userName = $(this).data('name');
+				var userMail = $(this).data('email');
+				$('.modal-header .user--name').html(userName);
+				$('.modal-body input[name="mail_to"').val(userMail);
+			});
+
+			$('#schedule').fullCalendar({
+				defaultView: 'listMonth',
+				//- defaultDate: '2018-03-12',
+				navLinks: true, // can click day/week names to navigate views
+				editable: true,
+				eventLimit: true, // allow "more" link when too many events
+				events: function(start, end, timezone, callback) {
+					$.ajax({
+						url: '/schedule',
+						type: 'GET',
+						dataType: 'json',
+						data: {
+							start: start.format(),
+							end: end.format()
+						},
+						success: function(doc) {
+							var events = [];
+							$.map(doc, function(data) {
+								events.push({
+									title: data.title,
+									start: data.start,
+									end: data.end
+								});
+							});
+							callback(events);
+						}
+					});
+				},
+				eventClick: function(calEvent, jsEvent, view) {
+					alert('Event: ' + calEvent.title);
+					alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+					alert('View: ' + view.name);
+
+					// change the border color just for fun
+					$(this).css('border-color', 'red');
+				}
+			});
+		})
+	
+
+block content
+	//- Content Header (Page header)
+	section.content-header
+		h1
+			| Dashboard
+			small Control panel
+		ol.breadcrumb
+			li
+				a(href='#')
+					i.fa.fa-dashboard
+					|  Home
+			li.active Dashboard
+	//- Main content
+	section.content
+		//- Small boxes (Stat box)
+		.row
+			//- .col-lg-3.col-xs-6
+				//- small box
+				.small-box.bg-aqua
+					.inner
+						h3 150
+						p New Orders
+					.icon
+						i.ion.ion-bag
+					a.small-box-footer(href='#')
+						| More info 
+						i.fa.fa-arrow-circle-right
+			//- ./col
+			//- .col-lg-3.col-xs-6
+				//- small box
+				.small-box.bg-green
+					.inner
+						h3
+							| 53
+							sup(style='font-size: 20px') %
+						p Bounce Rate
+					.icon
+						i.ion.ion-stats-bars
+					a.small-box-footer(href='#')
+						| More info 
+						i.fa.fa-arrow-circle-right
+			//- ./col
+			.col-lg-3.col-xs-6
+				//- small box
+				.small-box.bg-yellow
+					.inner
+						h3!= users.length
+						
+						if users.length > 1
+							p(style="color: #fff") Teachers Registered
+						else
+							p(style="color: #fff") Teacher Registered
+
+					//- .icon
+					//- 	i.ion.ion-person-add
+					//- a.small-box-footer(href='#')
+					//- 	| More info 
+					//- 	i.fa.fa-arrow-circle-right
+			//- ./col
+			//- .col-lg-3.col-xs-6
+				//- small box
+				.small-box.bg-red
+					.inner
+						h3 65
+						p Unique Visitors
+					.icon
+						i.ion.ion-pie-graph
+					a.small-box-footer(href='#')
+						| More info 
+						i.fa.fa-arrow-circle-right
+		
+		.row
+			.col-md-12
+				h3 List of user
+				br
+				if(users.length > 0)
+					table#table--user.table
+						thead
+							//- th Username
+							th Name
+							th Address
+							th Email
+							th Phone Number
+							th Position
+							th Teaching Subject
+							th Class
+							th Action
+						tbody
+							each val in users
+								tr  
+									//- td!= val.username
+									td.td--name
+										if val.name.firstName === 'undefined' && val.name.lastName === 'undefined'
+											| Please edit your name
+										else 
+											!= val.name.firstName + ' ' + val.name.lastName
+									td!= val.address
+									td.td--email!= val.email
+									td!= val.phone
+									td!= val.position
+									td!= val.teachingSubject
+									td.text-center
+										//- if ((val.teachingClass).length > 0)
+										//- 	each teach in val.teachingClass
+										//- 		//- -var str = (teach.classroom).split('').join(', ')
+										//- 		!= teach.classroom + ', '
+										
+										//- else
+										//- 	| No class
+										if val.teachingClass.class
+											!= val.teachingClass.class
+										else
+											| No class
+									
+									//- if val._id == user._id
+									//- 	td.text-center
+									//- 		a.btn.btn-success(href!= "/admin/edit/" + val._id, title="Edit User")
+									//- 			i.fa.fa-pencil
+									//- 			| Edit
+									//- else
+									td.text-center
+										button.btn.btn-success.btn-send_email(type='button', data-toggle='modal', data-target='#myModal' data-name!= val.name.firstName + ' ' + val.name.lastName data-email!= val.email) Send Email
+
+				else
+					h4
+						| Sorry, no user found
+
+
+		.row
+			.col-sm-6
+				#schedule(style='width: 100%; background: #fff;')
+
+
+		#myModal.modal.fade(role='dialog')
+			.modal-dialog
+				// Modal content
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal') ×
+						h4.modal-title 
+							| Send email to 
+							span.user--name
+					.modal-body
+						form(action='/admin/mail', method='post')
+							input(type='hidden', name='_csrf', value=_csrf)
+							.form-group
+								label(for='to') To:
+								input.form-control(type='email', name='mail_to')
+							.form-group
+								label(for='subject') Subject:
+								input.form-control(type='text', name='mail_subject')
+							.form-group
+								label(for='body') Body:
+								textarea.trumbowyg.form-control(cols='5', rows='5', name='mail_body')
+							.form-group
+								button.btn.btn-success(type='submit') Send
+
+					
+
+			//- .col-sm-6
+				.box.box-primary
+					.box-header
+						i.ion.ion-clipboard
+						h3.box-title To Do List
+						.box-tools.pull-right
+							ul.pagination.pagination-sm.inline
+								li
+									a(href='#') «
+								li
+									a(href='#') 1
+								li
+									a(href='#') 2
+								li
+									a(href='#') 3
+								li
+									a(href='#') »
+					//- /.box-header
+					.box-body
+						//- See dist/js/pages/dashboard.js to activate the todoList plugin
+						ul.todo-list
+							li
+								//- drag handle
+								span.handle
+									i.fa.fa-ellipsis-v
+									i.fa.fa-ellipsis-v
+								//- checkbox
+								input(type='checkbox', value='')
+								//- todo text
+								span.text Design a nice theme
+								//- Emphasis label
+								small.label.label-danger
+									i.fa.fa-clock-o
+									|  2 mins
+								//- General tools such as edit or delete
+								.tools
+									i.fa.fa-edit
+									i.fa.fa-trash-o
+							li
+								span.handle
+									i.fa.fa-ellipsis-v
+									i.fa.fa-ellipsis-v
+								input(type='checkbox', value='')
+								span.text Make the theme responsive
+								small.label.label-info
+									i.fa.fa-clock-o
+									|  4 hours
+								.tools
+									i.fa.fa-edit
+									i.fa.fa-trash-o
+							li
+								span.handle
+									i.fa.fa-ellipsis-v
+									i.fa.fa-ellipsis-v
+								input(type='checkbox', value='')
+								span.text Let theme shine like a star
+								small.label.label-warning
+									i.fa.fa-clock-o
+									|  1 day
+								.tools
+									i.fa.fa-edit
+									i.fa.fa-trash-o
+							li
+								span.handle
+									i.fa.fa-ellipsis-v
+									i.fa.fa-ellipsis-v
+								input(type='checkbox', value='')
+								span.text Let theme shine like a star
+								small.label.label-success
+									i.fa.fa-clock-o
+									|  3 days
+								.tools
+									i.fa.fa-edit
+									i.fa.fa-trash-o
+							li
+								span.handle
+									i.fa.fa-ellipsis-v
+									i.fa.fa-ellipsis-v
+								input(type='checkbox', value='')
+								span.text Check your messages and notifications
+								small.label.label-primary
+									i.fa.fa-clock-o
+									|  1 week
+								.tools
+									i.fa.fa-edit
+									i.fa.fa-trash-o
+							li
+								span.handle
+									i.fa.fa-ellipsis-v
+									i.fa.fa-ellipsis-v
+								input(type='checkbox', value='')
+								span.text Let theme shine like a star
+								small.label.label-default
+									i.fa.fa-clock-o
+									|  1 month
+								.tools
+									i.fa.fa-edit
+									i.fa.fa-trash-o
+					//- /.box-body
+					.box-footer.clearfix.no-border
+						button.btn.btn-default.pull-right(type='button')
+							i.fa.fa-plus
+							|  Add item

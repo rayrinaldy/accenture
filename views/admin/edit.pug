@@ -1,0 +1,222 @@
+extends layout
+
+block content
+	.container
+		.row
+			.col-md-12
+				form.form-update
+					input(type='hidden', name='_user', value!= users._id)
+					input(type='hidden', name='_csrf', value=_csrf)
+					.row
+						.col-md-6
+							.form-group
+								label(for="first-name") First Name:
+								input#first-name.form-control(type="text" name="firstName", value!= users.name.firstName)
+							.form-group
+								label(for="last-name") Last Name:
+								input#last-name.form-control(type="text" name="lastName", value!= users.name.lastName)
+							.form-group
+								label(for="address") Address:
+								textarea.form-control(name='address')!= users.address 
+							.form-group
+								label(for='email') Email address:
+								input#email.form-control(type='email', name="email" value!= users.email)
+							.form-group
+								label(for='phone') Phone Number:
+								input#phone.form-control(type='text', name="phone" value!= users.phone)
+						.col-md-6
+							.form-group
+								label(for='sel1') Position:
+								select#sel1.form-control(name="position")
+									option(value="No Position") No Position
+									option(value="Head Master") Head Master
+									option(value="Management") Management
+									option(value="Teacher") Teacher
+									option(value="External Teacher") External Teacher
+							.form-group
+								label(for='sel1') Teaching Subject
+								select#sel12.form-control(name="subject")
+									option(value="Not Assigned") Not Assigned
+									option(value="Mathematics") Mathematics
+									option(value="History") History
+									option(value="Bahasa Melayu") Bahasa Melayu
+									option(value="English") English
+									option(value="Computer") Computer
+
+							.form-group
+								//- .checkbox
+									p: strong Teaching class:
+									label.checkbox-inline
+										input.checkbox--class(name="teaching[0][classroom]" type='checkbox', value='1')
+										| Class 1
+									label.checkbox-inline
+										input.checkbox--class(name="teaching[1][classroom]" type='checkbox', value='2')
+										| Class 2
+									label.checkbox-inline
+										input.checkbox--class(name="teaching[2][classroom]" type='checkbox', value='3')
+										| Class 3
+								.radio
+									p: strong Teaching class:
+									label.radio-inline
+										input.radio--class(name="classroom" type='radio', value='1')
+										| Class 1
+									label.radio-inline
+										input.radio--class(name="classroom" type='radio', value='2')
+										| Class 2
+									label.radio-inline
+										input.radio--class(name="classroom" type='radio', value='3')
+										| Class 3
+							
+							//- p: strong Set schedule for class:
+
+							.form-group
+								label(for="date1") Set schedule for class:
+								input#date1.date-picker.form-control(type='text', name="schedule" value="")
+								input(type="hidden", name="start_class" value="")
+								input(type="hidden", name="end_class" value="")
+
+							//- .form-group.js-hide--element
+							//- 	label(for="date1") Class 1:
+							//- 	input#date1.date-picker.form-control(type='text', name="teaching[0][schedule]" value="")
+							//- .form-group.js-hide--element
+							//- 	label(for="date2") Class 2:
+							//- 	input#date2.date-picker.form-control(type='text', name="teaching[1][schedule]" value="")
+							//- .form-group.js-hide--element
+							//- 	label(for="date3") Class 3:
+							//- 	input#date3.date-picker.form-control(type='text', name="teaching[2][schedule]" value="")
+					button.btn.btn-success.btn-submit Submit
+					button.btn.btn-danger.btn-delete Delete user
+					
+					
+				//- form.forn-delete(action!='/admin/delete/' + users._id, method='post')
+					input(type='hidden', name='_csrf', value=_csrf)
+					button.btn.btn-danger.btn-delete(type='submit') Delete user
+							
+	
+	if users.teachingSubject != null
+		script.
+			var userPosition = !{JSON.stringify(users.position)};
+			var userSubject = !{JSON.stringify(users.teachingSubject)};
+			var userClass = !{JSON.stringify(users.teachingClass)};
+					
+block script
+	script.
+		$(function(){
+
+			var formDebug = false;
+			var _user = $('input[name="_user"]').val()
+
+			$('.js-hide--element').hide();
+
+			$('.date-picker').daterangepicker({
+				timePicker: true,
+				startDate: moment().startOf('hour'),
+				endDate: moment().startOf('hour').add(32, 'hour'),
+				locale: {
+					format: 'M/DD hh:mm A'
+				}
+			}, function(start, end, label) {
+				$('input[name="start_class"').val(start.format());
+				$('input[name="end_class"').val(end.format());
+			});
+
+			//- $('.checkbox--class').each(function(){
+			//- 	var el = $(this);
+			//- 	var checkboxVal = el.val();
+
+			//- 	el.click(function(){
+			//- 		if(el.is(':checked')) {
+			//- 			$('input#date' + checkboxVal).closest('.js-hide--element').show();
+			//- 			$('#date' + checkboxVal).val('').show();
+			//- 			$('#date' + checkboxVal).daterangepicker({
+			//- 				timePicker: true,
+			//- 				startDate: moment().startOf('hour'),
+			//- 				endDate: moment().startOf('hour').add(32, 'hour'),
+			//- 				locale: {
+			//- 					format: 'M/DD hh:mm A'
+			//- 				}
+			//- 			});
+			//- 		} else {
+			//- 			$('input#date' + checkboxVal).closest('.js-hide--element').hide();
+			//- 			$('#date' + checkboxVal).val('').hide();
+			//- 		}
+			//- 	});
+			//- });
+
+			if (typeof(userPosition) !== 'undefined') {
+				$('select#sel1').find('option[value="' + userPosition + '"]').attr('selected','selected');
+				$('select#sel12').find('option[value="' + userSubject + '"]').attr('selected','selected');
+
+				$("input.radio--class[value='" + userClass.class + "']").prop("checked",true);
+				//- $('input.date-picker').val(userClass.schedule);
+				
+				//- for(var i = 0; i < userClass.length; i++) {
+				//- 	$("input.radio--class[value='" + userClass[i].class + "']").prop("checked",true);
+
+					//- var chkBox = $('.checkbox--class');
+
+					//- if(chkBox.is(':checked')) {
+					//- 	$('input#date' + userClass[i].classroom).closest('.js-hide--element').show();
+					//- 	$('#date' + userClass[i].classroom).daterangepicker({
+					//- 		timePicker: true,
+					//- 		startDate: moment().startOf('hour'),
+					//- 		endDate: moment().startOf('hour').add(32, 'hour'),
+					//- 		locale: {
+					//- 			format: 'M/DD hh:mm A'
+					//- 		}
+					//- 	});
+					//- } else {
+					//- 	$('.js-hide--element').hide();
+					//- }
+				//- }
+			}
+
+			//- ===========================================
+
+			
+			$('.btn-submit').on('click', function(e){
+				e.preventDefault();
+
+				var formQuery = $('.form-update').serializeObject();
+
+				//- $('.date-picker').each(function(){
+				//- 	var dateVal = $(this).val();
+				//- 	if(dateVal === '') {
+				//- 		$(this).remove();
+				//- 		formQuery = $('.form-update').serializeObject();
+				//- 	}
+				//- });
+
+				//- var formQuery = $('.form-update').serializeObject();
+
+				if(formDebug) {
+					console.log(formQuery);
+					return false;
+				} else {
+					$.ajax({
+						url: '/admin/update/' + _user,
+						method: 'POST',
+						data: formQuery,
+						datatype: 'JSON',
+						success: function(data) {
+							window.open('/admin', '_self')
+						}
+					})
+				}
+			});
+
+			$('.btn-delete').on('click', function(e){
+				e.preventDefault();
+				$.ajax({
+					url: '/admin/delete/' + _user,
+					method: 'POST',
+					success: function(data) {
+						window.open('/admin', '_self')
+					}
+				})
+			})
+		})
+		
+		
+
+		

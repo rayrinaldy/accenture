@@ -1,0 +1,30 @@
+extends layout
+
+block content
+	.container
+		h3
+			a(href='/admin') Employee List
+		h1 Employee Detail
+		table
+			tbody
+				tr
+					td Name
+					td :
+					td!= user.name.firstName
+					td!= user.name.lastName
+				tr
+					td Address
+					td :
+					td!= user.address
+				tr
+					td Email
+					td :
+					td!= user.email
+				tr
+					td Phone
+					td :
+					td!= user.phone
+		h3
+			a(href!= '/admin/edit/' + user._id) EDIT
+		form(action!='/admin/delete/' + user._id, method='post')
+			button(type='submit') DELETE

@@ -1,0 +1,61 @@
+extends layout
+
+block css
+	link(rel='stylesheet', type='text/css', href='fonts/iconic/css/material-design-iconic-font.min.css')
+//- 	link(rel='stylesheet', type='text/css', href='vendor/animate/animate.css')
+//- 	link(rel='stylesheet', type='text/css', href='vendor/css-hamburgers/hamburgers.min.css')
+//- 	link(rel='stylesheet', type='text/css', href='vendor/animsition/css/animsition.min.css')
+//- 	link(rel='stylesheet', type='text/css', href='vendor/select2/select2.min.css')
+//- 	link(rel='stylesheet', type='text/css', href='vendor/daterangepicker/daterangepicker.css')
+
+//- block script
+//- 	script(src='vendor/animsition/js/animsition.min.js')
+//- 	script(src='vendor/bootstrap/js/popper.js')
+//- 	script(src='vendor/select2/select2.min.js')
+//- 	script(src='vendor/daterangepicker/moment.min.js')
+//- 	script(src='vendor/daterangepicker/daterangepicker.js')
+//- 	script(src='vendor/countdowntime/countdowntime.js')
+
+block content
+	.limiter
+		.container-login100
+			.wrap-login100
+				if (error && error.length > 0)
+					.alert.alert-danger!= error
+				form.login100-form.validate-form(role='form', action='/login', method='post')
+					input(type='hidden', name='_csrf', value=_csrf)
+					span.login100-form-title.pad_b--25
+						| Welcome to ACNAPI
+					span.login100-form-title.pad_b--50
+						a(href="/")
+							i.zmdi.zmdi-home
+					.wrap-input100.validate-input(data-validate='Enter username')
+						input.input100(type='text', name='username')
+						span.focus-input100(data-placeholder='username')
+					.wrap-input100.validate-input(data-validate='Enter password')
+						span.btn-show-pass
+							i.zmdi.zmdi-eye
+						input.input100(type='password', name='password')
+						span.focus-input100(data-placeholder='Password')
+					.container-login100-form-btn
+						.wrap-login100-form-btn
+							.login100-form-bgbtn
+							button.login100-form-btn
+								| Login
+
+					.text-center.pad_t--50
+						span.txt1
+							| Don’t have an account?
+						a.txt2(href='/register')
+							|  Sign Up
+
+					.text-center
+						span.txt1 or login with social media below
+						.pad_t--10
+						a.btn.btn-primary(href='/auth/facebook') Facebook
+						//- a.btn.btn-danger(href='/auth/google') Google
+						
+	#dropDownSelect1
+
+
+

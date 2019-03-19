@@ -1,0 +1,324 @@
+extends layout
+
+block css
+    link(href="/adminlte/plugins/iCheck/flat/blue.css", rel="stylesheet")
+
+block content
+    //- Content Header (Page header)
+    section.content-header
+        h1
+            | Mailbox
+            small 13 new messages
+        ol.breadcrumb
+            li
+                a(href='#')
+                    i.fa.fa-dashboard
+                    |  Home
+            li.active Mailbox
+
+    //- Main content
+    section.content
+        .row
+            .col-md-3
+                a.btn.btn-primary.btn-block.margin-bottom(href='compose.html') Compose
+                .box.box-solid
+                    .box-header.with-border
+                        h3.box-title Folders
+                        .box-tools
+                            button.btn.btn-box-tool(type='button', data-widget='collapse')
+                                i.fa.fa-minus
+                    .box-body.no-padding
+                        ul.nav.nav-pills.nav-stacked
+                            li.active
+                                a(href='#')
+                                    i.fa.fa-inbox
+                                    |  Inbox
+                                    span.label.label-primary.pull-right 12
+                            li
+                                a(href='#')
+                                    i.fa.fa-envelope-o
+                                    |  Sent
+                            li
+                                a(href='#')
+                                    i.fa.fa-file-text-o
+                                    |  Drafts
+                            li
+                                a(href='#')
+                                    i.fa.fa-filter
+                                    |  Junk 
+                                    span.label.label-warning.pull-right 65
+                            li
+                                a(href='#')
+                                    i.fa.fa-trash-o
+                                    |  Trash
+                    //- /.box-body
+                    //- /. box
+                    .box.box-solid
+                        .box-header.with-border
+                            h3.box-title Labels
+                            .box-tools
+                                button.btn.btn-box-tool(type='button', data-widget='collapse')
+                                    i.fa.fa-minus
+                        .box-body.no-padding
+                            ul.nav.nav-pills.nav-stacked
+                                li
+                                    a(href='#')
+                                        i.fa.fa-circle-o.text-red
+                                        |  Important
+                                li
+                                    a(href='#')
+                                        i.fa.fa-circle-o.text-yellow
+                                        |  Promotions
+                                li
+                                    a(href='#')
+                                        i.fa.fa-circle-o.text-light-blue
+                                        |  Social
+                        //- /.box-body
+                        //- /.box
+                        //- /.col
+            .col-md-9
+                .box.box-primary
+                    .box-header.with-border
+                        h3.box-title Inbox
+                        .box-tools.pull-right
+                            .has-feedback
+                                input.form-control.input-sm(type='text', placeholder='Search Mail')
+                                span.glyphicon.glyphicon-search.form-control-feedback
+                        //- /.box-tools
+                        //- /.box-header
+                        .box-body.no-padding
+                            .mailbox-controls
+                                //- Check all button
+                                button.btn.btn-default.btn-sm.checkbox-toggle(type='button')
+                                    i.fa.fa-square-o
+                                .btn-group
+                                    button.btn.btn-default.btn-sm(type='button')
+                                        i.fa.fa-trash-o
+                                    button.btn.btn-default.btn-sm(type='button')
+                                        i.fa.fa-reply
+                                    button.btn.btn-default.btn-sm(type='button')
+                                        i.fa.fa-share
+                                //- /.btn-group
+                                button.btn.btn-default.btn-sm(type='button')
+                                    i.fa.fa-refresh
+                                .pull-right
+                                    | 1-50/200
+                                    .btn-group
+                                        button.btn.btn-default.btn-sm(type='button')
+                                            i.fa.fa-chevron-left
+                                        button.btn.btn-default.btn-sm(type='button')
+                                            i.fa.fa-chevron-right
+                                    //- /.btn-group
+                                    //- /.pull-right
+                            .table-responsive.mailbox-messages
+                                table.table.table-hover.table-striped
+                                    tbody
+                                        tr
+                                            td abc
+                                .box-footer.no-padding
+                                    .mailbox-controls
+                                        //- Check all button
+                                        button.btn.btn-default.btn-sm.checkbox-toggle(type='button')
+                                            i.fa.fa-square-o
+                                        .btn-group
+                                            button.btn.btn-default.btn-sm(type='button')
+                                                i.fa.fa-trash-o
+                                            button.btn.btn-default.btn-sm(type='button')
+                                                i.fa.fa-reply
+                                            button.btn.btn-default.btn-sm(type='button')
+                                                i.fa.fa-share
+                                        //- /.btn-group
+                                        button.btn.btn-default.btn-sm(type='button')
+                                            i.fa.fa-refresh
+                                            
+                                        .pull-right
+                                            | 1-50/200
+                                            .btn-group
+                                                button.btn.btn-default.btn-sm(type='button')
+                                                    i.fa.fa-chevron-left
+                                                button.btn.btn-default.btn-sm(type='button')
+                                                    i.fa.fa-chevron-right
+                                            //- /.btn-group
+                                            //- /.pull-right
+                                            //- /. box
+                                            //- /.col
+                                            //- /.row
+                                            //- /.content
+                                            //- /.content-wrapper
+                                            footer.main-footer
+                                                .pull-right.hidden-xs
+                                                    b Version
+                                                    |  2.4.0
+                                                strong
+                                                    | Copyright © 2014-2016 
+                                                    a(href='https://adminlte.io') Almsaeed Studio
+                                                    | .
+                                                |  All rights
+                                                |     reserved.
+                                            //- Control Sidebar
+                                            aside.control-sidebar.control-sidebar-dark
+                                                //- Create the tabs
+                                                ul.nav.nav-tabs.nav-justified.control-sidebar-tabs
+                                                    li
+                                                        a(href='#control-sidebar-home-tab', data-toggle='tab')
+                                                            i.fa.fa-home
+                                                    li
+                                                        a(href='#control-sidebar-settings-tab', data-toggle='tab')
+                                                            i.fa.fa-gears
+                                                //- Tab panes
+                                                .tab-content
+                                                    //- Home tab content
+                                                    #control-sidebar-home-tab.tab-pane
+                                                        h3.control-sidebar-heading Recent Activity
+                                                        ul.control-sidebar-menu
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    i.menu-icon.fa.fa-birthday-cake.bg-red
+                                                                    .menu-info
+                                                                        h4.control-sidebar-subheading Langdon's Birthday
+                                                                        p Will be 23 on April 24th
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    i.menu-icon.fa.fa-user.bg-yellow
+                                                                    .menu-info
+                                                                        h4.control-sidebar-subheading Frodo Updated His Profile
+                                                                        p New phone +1(800)555-1234
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    i.menu-icon.fa.fa-envelope-o.bg-light-blue
+                                                                    .menu-info
+                                                                        h4.control-sidebar-subheading Nora Joined Mailing List
+                                                                        p nora@example.com
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    i.menu-icon.fa.fa-file-code-o.bg-green
+                                                                    .menu-info
+                                                                        h4.control-sidebar-subheading Cron Job 254 Executed
+                                                                        p Execution time 5 seconds
+                                                        //- /.control-sidebar-menu
+                                                        h3.control-sidebar-heading Tasks Progress
+                                                        ul.control-sidebar-menu
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    h4.control-sidebar-subheading
+                                                                        | Custom Template Design
+                                                                        span.label.label-danger.pull-right 70%
+                                                                    .progress.progress-xxs
+                                                                        .progress-bar.progress-bar-danger(style='width: 70%')
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    h4.control-sidebar-subheading
+                                                                        | Update Resume
+                                                                        span.label.label-success.pull-right 95%
+                                                                    .progress.progress-xxs
+                                                                        .progress-bar.progress-bar-success(style='width: 95%')
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    h4.control-sidebar-subheading
+                                                                        | Laravel Integration
+                                                                        span.label.label-warning.pull-right 50%
+                                                                    .progress.progress-xxs
+                                                                        .progress-bar.progress-bar-warning(style='width: 50%')
+                                                            li
+                                                                a(href='javascript:void(0)')
+                                                                    h4.control-sidebar-subheading
+                                                                        | Back End Framework
+                                                                        span.label.label-primary.pull-right 68%
+                                                                    .progress.progress-xxs
+                                                                        .progress-bar.progress-bar-primary(style='width: 68%')
+                                                        //- /.control-sidebar-menu
+                                                        //- /.tab-pane
+                                                        //- Stats tab content
+                                                        #control-sidebar-stats-tab.tab-pane Stats Tab Content
+                                                        //- /.tab-pane
+                                                        //- Settings tab content
+                                                        #control-sidebar-settings-tab.tab-pane
+                                                            form(method='post')
+                                                                h3.control-sidebar-heading General Settings
+                                                                .form-group
+                                                                    label.control-sidebar-subheading
+                                                                        | Report panel usage
+                                                                        input.pull-right(type='checkbox', checked='')
+                                                                    p
+                                                                        | Some information about this general settings option
+                                                                //- /.form-group
+                                                                .form-group
+                                                                    label.control-sidebar-subheading
+                                                                        | Allow mail redirect
+                                                                        input.pull-right(type='checkbox', checked='')
+                                                                    p
+                                                                        | Other sets of options are available
+                                                                //- /.form-group
+                                                                .form-group
+                                                                    label.control-sidebar-subheading
+                                                                        | Expose author name in posts
+                                                                        input.pull-right(type='checkbox', checked='')
+                                                                    p
+                                                                        | Allow the user to show his name in blog posts
+                                                                //- /.form-group
+                                                                h3.control-sidebar-heading Chat Settings
+                                                                .form-group
+                                                                    label.control-sidebar-subheading
+                                                                        | Show me as online
+                                                                        input.pull-right(type='checkbox', checked='')
+                                                                //- /.form-group
+                                                                .form-group
+                                                                    label.control-sidebar-subheading
+                                                                        | Turn off notifications
+                                                                        input.pull-right(type='checkbox')
+                                                                //- /.form-group
+                                                                .form-group
+                                                                    label.control-sidebar-subheading
+                                                                        | Delete chat history
+                                                                        a.text-red.pull-right(href='javascript:void(0)')
+                                                                            i.fa.fa-trash-o
+                                                                //- /.form-group
+                                                                //- /.tab-pane
+                                                                //- /.control-sidebar
+                                                                //
+                                                                    Add the sidebar's background. This div must be placed
+                                                                    immediately after the control sidebar
+                                                                .control-sidebar-bg
+
+block script
+    script(src='/adminlte/plugins/iCheck/icheck.min.js')
+    script.
+        $(function () {
+            //Enable iCheck plugin for checkboxes
+            //iCheck for checkbox and radio inputs
+            $('.mailbox-messages input[type="checkbox"]').iCheck({
+                checkboxClass: 'icheckbox_flat-blue',
+                radioClass: 'iradio_flat-blue'
+            });
+            //Enable check and uncheck all functionality
+            $(".checkbox-toggle").click(function () {
+                var clicks = $(this).data('clicks');
+                if (clicks) {
+                    //Uncheck all checkboxes
+                    $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+                    $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+                } else {
+                    //Check all checkboxes
+                    $(".mailbox-messages input[type='checkbox']").iCheck("check");
+                    $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+                }
+                $(this).data("clicks", !clicks);
+            });
+            //Handle starring for glyphicon and font awesome
+            $(".mailbox-star").click(function (e) {
+                e.preventDefault();
+                //detect type
+                var $this = $(this).find("a > i");
+                var glyph = $this.hasClass("glyphicon");
+                var fa = $this.hasClass("fa");
+                //Switch states
+                if (glyph) {
+                    $this.toggleClass("glyphicon-star");
+                    $this.toggleClass("glyphicon-star-empty");
+                }
+                if (fa) {
+                    $this.toggleClass("fa-star");
+                    $this.toggleClass("fa-star-o");
+                }
+            });
+        });

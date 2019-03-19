@@ -1,0 +1,48 @@
+aside.main-sidebar
+	//- sidebar: style can be found in sidebar.less
+	section.sidebar
+		//- Sidebar user panel
+		.user-panel
+			.pull-left.image
+				img.img-circle(src='/adminlte/dist/img/default-avatar.png', alt='User Image')
+			.pull-left.info
+				p #{user.name.firstName + ' ' + user.name.lastName}
+				a(href='#')
+					i.fa.fa-circle.text-success
+					|  Online
+		//- search form
+		form.sidebar-form(action='#', method='get')
+			.input-group
+				input.form-control(type='text', name='q', placeholder='Search...')
+				span.input-group-btn
+					button#search-btn.btn.btn-flat(type='submit', name='search')
+						i.fa.fa-search
+		//- /.search form
+		//- sidebar menu: : style can be found in sidebar.less
+		ul.sidebar-menu(data-widget='tree')
+			li.header MAIN NAVIGATION
+			//- li.active.treeview
+				a(href='#')
+					i.fa.fa-dashboard
+					span Dashboard
+					span.pull-right-container
+						i.fa.fa-angle-left.pull-right
+				ul.treeview-menu
+					li.active
+						a(href='index.html')
+							i.fa.fa-circle-o
+							|  Dashboard v1
+					li
+						a(href='index2.html')
+							i.fa.fa-circle-o
+							|  Dashboard v2
+			li
+				a(href='/admin')
+					i.fa.fa-th
+					span All Users
+					span.pull-right-container
+						small.label.pull-right.bg-green new
+			//- li
+				a(href='/admin/mailbox')
+					i.fa.fa-th
+					span Mailbox
